@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CTF Automation Task Schema",
+  "description": "基于三层架构的自动化装配标准（含生命周期管理）",
+  "type": "object",
+  "required": ["task_id", "status", "meta", "architecture", "vulnerability"], 
+  "properties": {
+    "task_id": { "type": "string", "description": "任务唯一ID" },
+    
+    "status": {
+      "type": "string",
+      "description": "任务生命周期状态（红绿灯）",
+      "enum": ["pending", "building", "running", "failed", "verified"],
+      "default": "pending"
+    },
+    
+    "meta": {
+      "type": "object",
+      "required": ["name", "category", "difficulty", "score"],
+      "properties": {
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "difficulty": { "type": "string" },
+        "score": { "type": "integer" }
+      }
+    },
+
+    "architecture": {
+      "type": "object",
+      "description": "核心：对应 Templates 的三层目录结构",
+      "required": ["base_image_ref", "compose_model_ref", "instance_ref"],
+      "properties": {
+        "base_image_ref": { "type": "string" },
+        "compose_model_ref": { "type": "string" },
+        "instance_ref": { "type": "string" },
+        "runtime_config": {
+          "type": "object",
+          "properties": {
+            "exposed_port": { "type": "integer" },
+            "env_vars": { "type": "object" }
+          }
+        }
+      }
+    },
+
+    "vulnerability": {
+      "type": "object",
+      "required": ["flag_value"],
+      "properties": {
+        "flag_value": { "type": "string" },
+        "check_script": { "type": "string" }
+      }
+    }
+  }
+}

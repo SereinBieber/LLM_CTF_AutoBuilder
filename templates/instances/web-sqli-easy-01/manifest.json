@@ -1,0 +1,16 @@
+{
+  "component_type": "INSTANCE",
+  "id": "web-sqli-easy-01",
+  "name": "Easy SQL Injection",
+  "description": "Basic boolean-based SQL injection vulnerability",
+  "requirements": {
+    "base_image": "php-apache",
+    "compose_model": "dual-service/web-db-linked"
+  },
+  "injection_points": [
+    {
+      "file": "db/init.sql",
+      "placeholder": "%%FLAG%%"
+    }
+  ]
+}

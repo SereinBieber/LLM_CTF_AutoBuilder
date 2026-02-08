@@ -1,0 +1,8 @@
+{
+  "component_type": "BASE_IMAGE",
+  "id": "php-apache",
+  "description": "Standard PHP 7.4 + Apache environment with MySQL extensions",
+  "maintainer": "Team_Leader",
+  "version": "1.0",
+  "env_requirements": []
+}

@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  web_service:
+    build: .
+    container_name: ${TASK_ID}_web
+    ports:
+      - "${EXPOSED_PORT}:80"
+    volumes:
+      - ./src:/var/www/html
+    networks:
+      - ctf_internal_net
+    depends_on:
+      - db_service
+    environment:
+      - DB_HOST=db_service
+      - DB_USER=root
+      - DB_PASS=${DB_ROOT_PASS}
+
+  db_service:
+    image: mysql:5.7
+    container_name: ${TASK_ID}_db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS}
+      MYSQL_DATABASE: ctf_game
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
+    networks:
+      - ctf_internal_net
+
+networks:
+  ctf_internal_net:
+    driver: bridge
