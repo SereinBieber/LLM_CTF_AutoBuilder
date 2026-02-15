@@ -1,0 +1,30 @@
+version: '3'
+services:
+  pwn_service:
+    build: ../../../base_images/pwn-common
+    container_name: ${TASK_ID}_pwn
+    restart: always
+    ports:
+      - "${EXPOSED_PORT}:9999"
+    volumes:
+      # 挂载 AI 生成的源码目录
+      - ./src:/app
+    environment:
+      - FLAG=flag{test_flag_default}
+    # 【工程级核心逻辑】
+    # 1. echo $FLAG > /flag: 把环境变量里的 Flag 写入文件 (模拟真实 Pwn 环境)
+    # 2. gcc -o pwn main.c: 自动编译 AI 生成的源码
+    # 3. chmod: 设置权限
+    # 4. socat: 将程序的输入输出绑定到 9999 端口，允许远程连接
+    command: >
+      sh -c "echo $FLAG > /flag && 
+             chmod 644 /flag && 
+             gcc -o pwn main.c -fno-stack-protector -z execstack && 
+             chmod +x pwn && 
+             su ctf -c 'socat TCP-LISTEN:9999,reuseaddr,fork EXEC:./pwn,stderr'"
+    networks:
+      - ctf_net
+
+networks:
+  ctf_net:
+    driver: bridge

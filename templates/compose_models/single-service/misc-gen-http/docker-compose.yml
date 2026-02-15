@@ -1,0 +1,24 @@
+version: '3'
+services:
+  misc_service:
+    # 注意：这里用 misc-common (带 Python 和 Pillow 的)，不用 nginx 了！
+    build: ../../../base_images/misc-common
+    container_name: ${TASK_ID}_misc
+    restart: always
+    ports:
+      - "${EXPOSED_PORT}:8000"  # Python http.server 默认端口
+    volumes:
+      - ./src:/app
+    environment:
+      - FLAG=flag{test_flag_default}
+    # 【核心逻辑】
+    # 1. python generator.py: 运行脚本，利用 Pillow 现场生成隐写图片
+    # 2. python -m http.server: 启动 Web下载服务
+    command: >
+      sh -c "python generator.py && python -m http.server 8000"
+    networks:
+      - ctf_net
+
+networks:
+  ctf_net:
+    driver: bridge
