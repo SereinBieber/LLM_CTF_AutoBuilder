@@ -21,7 +21,8 @@
         "name": { "type": "string" },
         "category": { "type": "string" },
         "difficulty": { "type": "string" },
-        "score": { "type": "integer" }
+        "score": { "type": "integer" },
+	"description": { "type": "string" }
       }
     },
 
