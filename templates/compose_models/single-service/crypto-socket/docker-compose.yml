@@ -1,0 +1,24 @@
+version: '3'
+services:
+  crypto_service:
+    build: ../../../base_images/crypto-common
+    container_name: ${TASK_ID}_crypto
+    restart: always
+    ports:
+      - "${EXPOSED_PORT}:9999"
+    volumes:
+      # 挂载 AI 生成的 Python 脚本
+      - ./src:/app
+    environment:
+      - FLAG=flag{test_flag_default}
+    # 核心启动命令：
+    # 1. python -u: 禁用缓冲，保证 print 的内容立刻发送给选手
+    # 2. server.py: 约定 AI 生成的主文件名为 server.py
+    command: >
+      socat TCP-LISTEN:9999,reuseaddr,fork EXEC:"python -u server.py",stderr
+    networks:
+      - ctf_net
+
+networks:
+  ctf_net:
+    driver: bridge

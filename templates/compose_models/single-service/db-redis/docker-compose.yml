@@ -1,0 +1,19 @@
+version: '3'
+services:
+  db_service:
+    build: ../../../base_images/redis-common
+    container_name: ${TASK_ID}_redis
+    restart: always
+    ports:
+      - "${EXPOSED_PORT}:6379"
+    volumes:
+      # 挂载 AI 在 tasks_data 中生成的漏洞配置文件
+      - ./conf/redis.conf:/usr/local/etc/redis/redis.conf
+    # 指定使用挂载的配置文件启动
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    networks:
+      - ctf_net
+
+networks:
+  ctf_net:
+    driver: bridge
