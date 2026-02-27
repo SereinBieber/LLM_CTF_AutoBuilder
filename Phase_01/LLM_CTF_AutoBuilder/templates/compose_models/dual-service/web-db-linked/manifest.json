@@ -1,0 +1,12 @@
+{
+  "component_type": "COMPOSE_MODEL",
+  "id": "dual-service/web-db-linked",
+  "description": "Two-container topology: Web Frontend linked to Database Backend",
+  "topology_type": "dual-service",
+  "containers": ["web", "db"],
+  "required_vars": [
+    "BASE_IMAGE_NAME",
+    "EXPOSED_PORT",
+    "DB_ROOT_PASS"
+  ]
+}
