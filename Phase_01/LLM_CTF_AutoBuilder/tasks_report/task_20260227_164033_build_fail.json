@@ -1,0 +1,5 @@
+{
+  "task_id": "task_20260227_164033",
+  "status": "FAILED",
+  "reason": "docker-compose 启动失败 (exit 1)\nstdout: \nstderr: time=\"2026-02-27T16:40:34+08:00\" level=warning msg=\"C:\\\\Users\\\\A2050\\\\Desktop\\\\澶у垱\\\\LLM_CTF_AutoBuilder\\\\tasks_data\\\\task_20260227_164033\\\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion\"\nunable to get image 'task_20260227_164033-web': error during connect: Get \"http://%2F%2F.%2Fpipe%2FdockerDesktopLinuxEngine/v1.51/images/task_20260227_164033-web/json\": open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.\n"
+}

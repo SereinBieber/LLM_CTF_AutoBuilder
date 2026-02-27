@@ -1,0 +1,17 @@
+{
+  "component_type": "INSTANCE",
+  "id": "web-xss-php-01",
+  "name": "Reflected XSS",
+  "category": "web",
+  "difficulty": "easy",
+  "description": "反射型 XSS，name 参数未过滤，Cookie 中有 session_id，目标是弹出或窃取 Cookie",
+  "requirements": {
+    "compose_model": "web_php"
+  },
+  "flag_injection": {
+    "note": "flag 藏在 Cookie 的 session_id 中，需修改 src/index.php 里的 secret_token_123 为 FLAG_PLACEHOLDER",
+    "file": "src/index.php",
+    "placeholder": "FLAG_PLACEHOLDER"
+  },
+  "solve_hint": "?name=<script>alert(document.cookie)</script>"
+}

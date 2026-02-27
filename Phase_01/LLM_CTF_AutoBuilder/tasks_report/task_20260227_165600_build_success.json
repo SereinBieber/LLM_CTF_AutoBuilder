@@ -1,0 +1,6 @@
+{
+  "task_id": "task_20260227_165600",
+  "status": "SUCCESS",
+  "access_url": "http://localhost:12713",
+  "flag": "flag{php_vulnerability_exploit}"
+}

