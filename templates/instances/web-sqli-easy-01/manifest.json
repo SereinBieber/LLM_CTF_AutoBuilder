@@ -1,16 +1,16 @@
 {
   "component_type": "INSTANCE",
   "id": "web-sqli-easy-01",
-  "name": "Easy SQL Injection",
-  "description": "Basic boolean-based SQL injection vulnerability",
+  "name": "SQL Injection - UNION Query",
+  "category": "web",
+  "difficulty": "easy",
+  "description": "UNION 联合查询注入，flag 藏在 password 列，需通过 UNION SELECT 取出",
   "requirements": {
-    "base_image": "php-apache",
-    "compose_model": "dual-service/web-db-linked"
+    "compose_model": "web_mysql"
   },
-  "injection_points": [
-    {
-      "file": "db/init.sql",
-      "placeholder": "%%FLAG%%"
-    }
-  ]
+  "flag_injection": {
+    "file": "db/init.sql",
+    "placeholder": "FLAG_PLACEHOLDER"
+  },
+  "solve_hint": "?id=1 UNION SELECT password FROM users--+"
 }

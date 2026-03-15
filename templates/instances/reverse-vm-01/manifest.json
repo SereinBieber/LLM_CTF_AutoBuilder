@@ -1,0 +1,16 @@
+{
+  "component_type": "INSTANCE",
+  "id": "reverse-vm-01",
+  "name": "MiniVM Integrity Checker",
+  "category": "reverse",
+  "difficulty": "hard",
+  "description": "寄存器制虚拟机执行内嵌字节码逐字节校验输入，ISA含10条指令，flag经compile_checker()编译为字节码。逆向ISA、反汇编字节码、追踪CMP_EQ/JMP_IF链恢复期望字节序列即为flag",
+  "requirements": {
+    "compose_model": "reverse-http"
+  },
+  "flag_injection": {
+    "method": "compile_time",
+    "note": "FLAG 运行时传入 compile_checker() 生成字节码，每字节对应4条指令的检查序列"
+  },
+  "solve_hint": "指令格式: [opcode:8|dst:4|src_a:4|imm:16]。定位vm_program[]，写脚本解析每组4指令中 LOAD_IMM R1, expected 字段，顺序拼接得flag"
+}

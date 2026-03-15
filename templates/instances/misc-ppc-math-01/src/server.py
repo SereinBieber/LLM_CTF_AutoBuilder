@@ -1,12 +1,13 @@
-# Type: PPC Math
+# Type: PPC (Programming Puzzle & Challenge) - Math
 # Difficulty: Easy
+import os
 import sys
 import random
-import time
 import signal
 
+FLAG = os.environ.get('FLAG', 'FLAG_PLACEHOLDER')
 
-# 30秒超时处理
+
 def timeout(signum, frame):
     print("\n⏰ Time's up!")
     sys.exit(0)
@@ -16,13 +17,12 @@ def main():
     signal.signal(signal.SIGALRM, timeout)
     signal.alarm(30)
 
-    print("Quick Math: Answer 50 questions in 30s!")
+    print("Quick Math: Answer 50 questions in 30 seconds!")
     target = 50
-    correct = 0
 
     for i in range(target):
-        a = random.randint(1, 100)
-        b = random.randint(1, 100)
+        a   = random.randint(1, 100)
+        b   = random.randint(1, 100)
         ans = a + b
 
         print(f"[{i + 1}/{target}] {a} + {b} = ?")
@@ -31,17 +31,15 @@ def main():
         try:
             user = sys.stdin.readline().strip()
             if int(user) == ans:
-                correct += 1
+                continue
             else:
-                print("Wrong!")
+                print("Wrong! Game over.")
                 sys.exit(0)
-        except:
+        except Exception:
             sys.exit(0)
 
-    print(f"🎉 Flag: {os.environ.get('FLAG', 'flag{ppc_success}')}")
+    print(f"🎉 Congratulations! Flag: {FLAG}")
 
 
 if __name__ == "__main__":
-    import os
-
     main()

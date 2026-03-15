@@ -1,0 +1,15 @@
+{
+  "component_type": "INSTANCE",
+  "id": "pwn-stack-overflow-01",
+  "name": "Stack Buffer Overflow",
+  "category": "pwn",
+  "difficulty": "easy",
+  "description": "经典栈溢出，gets()无限制读入，覆盖返回地址跳转到backdoor函数拿shell",
+  "requirements": {
+    "compose_model": "pwn-socat"
+  },
+  "flag_injection": {
+    "note": "flag 由 compose 的 echo $FLAG > /flag 写入文件，拿到shell后 cat /flag"
+  },
+  "solve_hint": "pwntools: payload = b'A'*72 + p64(backdoor_addr)，用 checksec 确认无 canary"
+}

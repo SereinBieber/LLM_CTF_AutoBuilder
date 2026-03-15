@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Reverse Challenge - AntiDebug KeyGen</title>
+  <style>
+    body { font-family: 'Courier New', monospace; background: #0d1117; color: #c9d1d9; padding: 40px; }
+    h2   { color: #f85149; }
+    .box { background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 20px; max-width: 620px; }
+    a    { color: #58a6ff; font-size: 1.1em; }
+    .warn{ color: #f0883e; font-size: 0.9em; }
+    .tag { color: #3fb950; font-size: 0.85em; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>🛡️ AntiDebug KeyGen</h2>
+    <p>A key generator protected by multiple anti-debugging layers. Run it under a debugger and you'll get a fake flag.</p>
+    <p><strong>Category:</strong> Reverse Engineering &nbsp;|&nbsp; <strong>Difficulty:</strong> Medium</p>
+    <p class="warn">⚠️ Warning: ptrace detection · TracerPid check · RDTSC timing guard</p>
+    <hr style="border-color:#30363d">
+    <p>⬇️ <a href="challenge" download>Download: challenge (ELF x86-64)</a></p>
+    <p class="tag">Hint: Three anti-debug guards. Patch them to NOP, or replicate <code>decrypt_secret()</code> offline.</p>
+  </div>
+</body>
+</html>

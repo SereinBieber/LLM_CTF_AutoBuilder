@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  reverse_service:
+    image: ubuntu:22.04
+    container_name: ${TASK_ID}_reverse
+    restart: always
+    ports:
+      - "${EXPOSED_PORT}:80"
+    volumes:
+      - ./src:/build/src
+      - ./nginx.conf:/etc/nginx/sites-available/default
+    environment:
+      - FLAG=FLAG_PLACEHOLDER
+    # 启动流程：
+    # 1. 安装编译环境和 nginx
+    # 2. 执行 build.sh 将 FLAG 编译进二进制
+    # 3. 把编译产物复制到 nginx 目录
+    # 4. 启动 nginx 提供下载
+    command: >
+      sh -c "
+        apt-get update -qq &&
+        apt-get install -y -qq gcc gcc-multilib nginx &&
+        cd /build/src &&
+        FLAG=$$FLAG sh build.sh &&
+        cp -f challenge /var/www/html/challenge &&
+        cp -f index.html /var/www/html/index.html 2>/dev/null || true &&
+        nginx -g 'daemon off;'
+      "
+    networks:
+      - ctf_net
+
+networks:
+  ctf_net:
+    driver: bridge

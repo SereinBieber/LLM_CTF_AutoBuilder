@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Reverse Challenge - MiniVM Integrity Checker</title>
+  <style>
+    body { font-family: 'Courier New', monospace; background: #0d1117; color: #c9d1d9; padding: 40px; }
+    h2   { color: #d2a8ff; }
+    .box { background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 20px; max-width: 640px; }
+    a    { color: #58a6ff; font-size: 1.1em; }
+    pre  { background:#0d1117; padding:10px; border-radius:4px; font-size:0.82em; color:#8b949e; overflow-x:auto; }
+    .tag { color: #3fb950; font-size: 0.85em; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>🖥️ MiniVM Integrity Checker</h2>
+    <p>A register-based virtual machine executes an embedded bytecode program that validates your passphrase byte-by-byte.</p>
+    <p><strong>Category:</strong> Reverse Engineering &nbsp;|&nbsp; <strong>Difficulty:</strong> Hard</p>
+    <hr style="border-color:#30363d">
+    <p><strong>ISA Quick Reference</strong></p>
+    <pre>
+0x01  LOAD_IMM  dst, imm       R[dst] = imm
+0x02  LOAD_MEM  dst, src_a     R[dst] = mem[R[src_a]]
+0x04  ADD       dst, src_a     R[dst] += R[src_a]
+0x05  XOR       dst, src_a     R[dst] ^= R[src_a]
+0x06  CMP_EQ    dst, src_a     R[dst] = (R[dst]==R[src_a]) ? 1 : 0
+0x07  JMP_IF    dst, imm       if R[dst]==0: PC += imm
+0x08  HALT
+0x09  IN        dst            R[dst] = next input byte
+0x0A  OUT       src_a          accept/reject signal
+    </pre>
+    <p>⬇️ <a href="challenge" download>Download: challenge (ELF x86-64)</a></p>
+    <p class="tag">Hint: Disassemble <code>vm_program[]</code>, trace the CMP_EQ / JMP_IF chain to extract expected bytes.</p>
+  </div>
+</body>
+</html>

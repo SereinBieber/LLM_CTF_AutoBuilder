@@ -1,0 +1,16 @@
+{
+  "component_type": "INSTANCE",
+  "id": "reverse-anti-debug-01",
+  "name": "AntiDebug KeyGen",
+  "category": "reverse",
+  "difficulty": "medium",
+  "description": "三层反调试保护的密钥生成器：ptrace自附加检测、/proc TracerPid检查、RDTSC时序异常检测。调试器下输出假flag，需绕过或patch三层检测后才能触发真实解密路径",
+  "requirements": {
+    "compose_model": "reverse-http"
+  },
+  "flag_injection": {
+    "method": "compile_time",
+    "note": "FLAG 通过 build.sh 编译时注入，运行时动态加密存储于栈上，不静态出现在 .rodata"
+  },
+  "solve_hint": "静态方案：IDA定位三个ad_*函数入口，将 jz/jnz 改为 nop；或提取 secret_data 构造脚本：out[i] = (enc[i] - (i%7+1) + 256) % 256"
+}

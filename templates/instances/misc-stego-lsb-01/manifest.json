@@ -1,0 +1,15 @@
+{
+  "component_type": "INSTANCE",
+  "id": "misc-stego-lsb-01",
+  "name": "Static LSB Steganography",
+  "category": "misc",
+  "difficulty": "easy",
+  "description": "静态LSB隐写题，challenge.png由出题人预先生成后放入src/目录，通过HTTP提供下载",
+  "requirements": {
+    "compose_model": "misc-static"
+  },
+  "flag_injection": {
+    "note": "此题为静态题，flag已预先隐写进challenge.png，不使用FLAG_PLACEHOLDER机制。出题时需手动生成图片放入src/challenge.png"
+  },
+  "solve_hint": "下载 challenge.png，用 zsteg / stegsolve 提取LSB数据"
+}

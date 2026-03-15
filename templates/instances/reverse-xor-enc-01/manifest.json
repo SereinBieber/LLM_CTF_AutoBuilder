@@ -1,0 +1,16 @@
+{
+  "component_type": "INSTANCE",
+  "id": "reverse-xor-enc-01",
+  "name": "FirmwareGuard Activation Checker",
+  "category": "reverse",
+  "difficulty": "medium",
+  "description": "固件激活校验程序，flag 经4轮 XOR 密钥调度加密后存入 .rodata。逆向 derive_round_key() 密钥生成逻辑，重放解密还原 flag",
+  "requirements": {
+    "compose_model": "reverse-http"
+  },
+  "flag_injection": {
+    "method": "compile_time",
+    "note": "FLAG 通过 build.sh 编译时以 -DFLAG_VALUE 注入，运行时动态构造 cipher_blob"
+  },
+  "solve_hint": "定位 cipher_blob 和 derive_round_key()，复现密钥推导：key[i] = (base ^ (round*0x37) + i) & 0xFF，对 cipher_blob 重放4轮 XOR 得到 flag"
+}

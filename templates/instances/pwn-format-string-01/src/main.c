@@ -23,8 +23,8 @@ int main() {
     printf("Hello, ");
     // 漏洞点：直接打印 buffer，没有格式化参数
     // 攻击者输入 %x %x 可泄露内存，输入 %n 可修改 secret_value
-    printf(buffer); 
-    
+    printf(buffer);
+
     if (secret_value == 0x1337) {
         get_flag();
     } else {

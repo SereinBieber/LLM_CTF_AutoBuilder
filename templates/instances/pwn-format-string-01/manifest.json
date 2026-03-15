@@ -1,0 +1,15 @@
+{
+  "component_type": "INSTANCE",
+  "id": "pwn-format-string-01",
+  "name": "Format String Vulnerability",
+  "category": "pwn",
+  "difficulty": "medium",
+  "description": "printf(buf)格式化字符串漏洞，用%n写入0x1337到secret_value地址触发get_flag拿shell",
+  "requirements": {
+    "compose_model": "pwn-socat"
+  },
+  "flag_injection": {
+    "note": "flag 由 compose 的 echo $FLAG > /flag 写入，拿到shell后 cat /flag"
+  },
+  "solve_hint": "先用 %p 泄露栈上地址定位 secret_value，再用 %1337c%Xn 写入目标值"
+}

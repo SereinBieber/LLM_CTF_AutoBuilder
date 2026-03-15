@@ -16,14 +16,12 @@ void vulnerable_function() {
     char buffer[64];
     printf("Please input your magic message: \n");
     // 漏洞点：gets 不限制长度，可覆盖返回地址
-    gets(buffer); 
+    gets(buffer);
 }
 
 int main() {
-    // 关闭缓冲区，防止 I/O 延迟
     setvbuf(stdout, NULL, _IONBF, 0);
     setvbuf(stdin, NULL, _IONBF, 0);
-    
     printf("Welcome to the Stack Overflow Challenge!\n");
     vulnerable_function();
     return 0;

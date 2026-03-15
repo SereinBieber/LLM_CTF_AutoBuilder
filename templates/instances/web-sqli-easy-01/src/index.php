@@ -1,65 +1,61 @@
 <?php
-// 数据库连接配置
-$servername = "db_service";
-$username = "root";
-$password = getenv('DB_PASS'); // 注意：这里用的是正确的环境变量名
-$dbname = "ctf_game";
+// web-sqli-easy-01 | UNION 联合查询注入
+// 解法: ?id=1 UNION SELECT password FROM users--+
 
-// 创建连接
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli(
+    getenv('DB_HOST') ?: 'db',
+    getenv('DB_USER') ?: 'ctf_user',
+    getenv('DB_PASS') ?: '',
+    getenv('DB_NAME') ?: 'ctf_db'
+);
+if ($conn->connect_error) die("服务暂时不可用");
 
-// 检查连接
-if ($conn->connect_error) {
-    die("连接失败，请联系管理员"); // 生产环境不应该输出详细错误信息
-}
-
-// 获取 ID，默认为 1
 $id = isset($_GET['id']) ? $_GET['id'] : '1';
-
 ?>
-
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 <head>
-    <title>用户查询系统</title>
-    <style>
-        body { font-family: sans-serif; text-align: center; margin-top: 50px; }
-        .box { border: 1px solid #ccc; padding: 20px; display: inline-block; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h1 { color: #333; }
-        .result { color: green; font-weight: bold; font-size: 1.2em; }
-    </style>
+<meta charset="UTF-8">
+<title>员工信息查询</title>
+<style>
+  body{font-family:"Microsoft YaHei",sans-serif;background:#f0f2f5;
+       display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0}
+  .card{background:#fff;padding:40px;border-radius:8px;
+        box-shadow:0 2px 12px rgba(0,0,0,.1);width:420px}
+  h2{margin:0 0 20px;color:#1a1a2e;text-align:center}
+  input[type=text]{width:100%;padding:10px;border:1px solid #ddd;
+                   border-radius:4px;font-size:14px;box-sizing:border-box}
+  button{width:100%;padding:10px;background:#4a90e2;color:#fff;border:none;
+         border-radius:4px;cursor:pointer;font-size:15px;margin-top:10px}
+  button:hover{background:#357abd}
+  .result{margin-top:20px;padding:15px;background:#f9f9f9;
+          border-left:4px solid #4a90e2;border-radius:4px;min-height:40px}
+  .hint{margin-top:12px;font-size:12px;color:#aaa;text-align:center}
+</style>
 </head>
 <body>
-    <div class="box">
-        <h1>🔍 内部人员查询系统</h1>
-        <p>请输入员工 ID 进行查询:</p>
-        <form method="GET">
-            <input type="text" name="id" value="<?php echo htmlspecialchars($id); ?>">
-            <button type="submit">查询</button>
-        </form>
-        <hr>
-        <div class="result">
-            <?php
-            // --- 漏洞点在这里 ---
-            // 我只查询了 'username' 这一列，没有查 'password'
-            // 正常用户只能看到名字，看不到密码（Flag）
-            $sql = "SELECT username FROM users WHERE id = $id";
-            
-            // 执行查询
-            // 如果你懂 SQL 注入，你可以用 UNION SELECT 把 password 拼接到 username 的位置显示出来
-            $result = $conn->query($sql);
-
-            if ($result && $result->num_rows > 0) {
-                while($row = $result->fetch_assoc()) {
-                    // 只显示用户名
-                    echo "Hello, " . $row["username"];
-                }
-            } else {
-                echo "未找到该用户";
-            }
-            $conn->close();
-            ?>
-        </div>
-    </div>
+<div class="card">
+  <h2>🔍 员工信息查询系统</h2>
+  <form method="GET">
+    <input type="text" name="id" placeholder="请输入员工 ID"
+           value="<?= htmlspecialchars($id) ?>">
+    <button type="submit">查 询</button>
+  </form>
+  <div class="result">
+    <?php
+    // 漏洞点：$id 未过滤直接拼入 SQL，只查 username
+    // flag 藏在 password 列，需 UNION SELECT 带出
+    $r = $conn->query("SELECT username FROM users WHERE id = $id");
+    if ($r && $r->num_rows > 0) {
+        while ($row = $r->fetch_assoc())
+            echo "员工姓名：<strong>" . $row['username'] . "</strong><br>";
+    } else {
+        echo "未找到该员工";
+    }
+    $conn->close();
+    ?>
+  </div>
+  <p class="hint">本系统仅展示员工姓名，其余字段受权限保护</p>
+</div>
 </body>
 </html>

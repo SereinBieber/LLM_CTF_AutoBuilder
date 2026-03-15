@@ -4,10 +4,8 @@ import os
 import sys
 from itertools import cycle
 
-# 获取 FLAG
-FLAG = os.environ.get('FLAG', 'flag{test_xor}').encode()
-# 随机生成 4 字节密钥
-KEY = os.urandom(4)
+FLAG = os.environ.get('FLAG', 'FLAG_PLACEHOLDER').encode()
+KEY  = os.urandom(4)
 
 
 def xor_cipher(data, key):
@@ -26,13 +24,10 @@ def main():
             print("Input your message (hex):")
             line = sys.stdin.readline().strip()
             if not line: break
-
-            # 接收用户输入并加密返回
-            # 漏洞：用户输入 '00000000' 即可得到密钥流，从而解密 FLAG
             pt = bytes.fromhex(line)
             ct = xor_cipher(pt, KEY)
             print(f"Ciphertext: {ct.hex()}")
-        except Exception as e:
+        except Exception:
             print("Error, bye!")
             break
 

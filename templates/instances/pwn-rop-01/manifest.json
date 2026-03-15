@@ -1,0 +1,15 @@
+{
+  "component_type": "INSTANCE",
+  "id": "pwn-rop-01",
+  "name": "Return Oriented Programming",
+  "category": "pwn",
+  "difficulty": "medium",
+  "description": "NX开启无法执行shellcode，需用ROPgadget构造调用链执行system('/bin/sh')",
+  "requirements": {
+    "compose_model": "pwn-socat"
+  },
+  "flag_injection": {
+    "note": "flag 由 compose 的 echo $FLAG > /flag 写入，拿到shell后 cat /flag"
+  },
+  "solve_hint": "ROPgadget --binary pwn找 pop rdi;ret，构造 pop rdi -> /bin/sh地址 -> system地址"
+}

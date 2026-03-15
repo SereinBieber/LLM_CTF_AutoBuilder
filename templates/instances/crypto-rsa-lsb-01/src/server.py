@@ -4,10 +4,9 @@ import os
 import sys
 from Crypto.Util.number import getPrime, bytes_to_long
 
-FLAG = os.environ.get('FLAG', 'flag{rsa_lsb_oracle}').encode()
-m = bytes_to_long(FLAG)
+FLAG = os.environ.get('FLAG', 'FLAG_PLACEHOLDER').encode()
+m    = bytes_to_long(FLAG)
 
-# 生成 RSA 参数
 p = getPrime(512)
 q = getPrime(512)
 n = p * q
@@ -27,15 +26,11 @@ def main():
             print("Give me a ciphertext (integer):")
             line = sys.stdin.readline().strip()
             if not line: break
-
-            c_input = int(line)
-            # 解密
+            c_input  = int(line)
             m_output = pow(c_input, d, n)
-
-            # 漏洞点：只泄露最后一位（奇偶性）
-            # 攻击者可以利用这一点进行二分查找
+            # 漏洞点：只泄露最低位，攻击者可用二分法还原明文
             print(f"The last bit of plaintext is: {m_output & 1}")
-        except:
+        except Exception:
             break
 
 

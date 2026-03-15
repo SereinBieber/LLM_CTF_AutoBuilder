@@ -1,0 +1,17 @@
+{
+  "component_type": "INSTANCE",
+  "id": "crypto-rsa-lsb-01",
+  "name": "RSA LSB Parity Oracle",
+  "category": "crypto",
+  "difficulty": "hard",
+  "description": "RSA解密Oracle只返回明文最低位，利用二分查找在O(log n)次查询内还原完整明文",
+  "requirements": {
+    "compose_model": "crypto-socket"
+  },
+  "flag_injection": {
+    "file": "src/server.py",
+    "placeholder": "FLAG_PLACEHOLDER",
+    "note": "flag 通过 FLAG 环境变量传入"
+  },
+  "solve_hint": "每次将密文乘以2^e mod n，根据奇偶性二分缩小明文范围，约512次后收敛"
+}
