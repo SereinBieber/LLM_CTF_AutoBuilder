@@ -1,0 +1,24 @@
+{
+  "task_id": "task_20260227_165600",
+  "status": "pending",
+  "meta": {
+    "name": "PHP类型CTF题目",
+    "category": "web",
+    "difficulty": "medium",
+    "score": 300,
+    "description": "一个PHP类型的题目，考察PHP相关漏洞利用"
+  },
+  "architecture": {
+    "base_image_ref": "php:8.0-apache",
+    "compose_model_ref": "web_php",
+    "instance_ref": "web-php-easy-01",
+    "runtime_config": {
+      "exposed_port": 12713,
+      "env_vars": {}
+    }
+  },
+  "vulnerability": {
+    "flag_value": "flag{php_vulnerability_exploit}",
+    "check_script": "/check/script.sh"
+  }
+}

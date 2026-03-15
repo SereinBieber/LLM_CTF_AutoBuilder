@@ -1,0 +1,24 @@
+{
+  "task_id": "task_20260227_164033",
+  "status": "pending",
+  "meta": {
+    "name": "PHP基础挑战",
+    "category": "web",
+    "difficulty": "easy",
+    "score": 100,
+    "description": "一道php类型的题目，考察基础的PHP安全知识"
+  },
+  "architecture": {
+    "base_image_ref": "php:8.2-apache",
+    "compose_model_ref": "web_php",
+    "instance_ref": "web-php-basic-01",
+    "runtime_config": {
+      "exposed_port": 18080,
+      "env_vars": {}
+    }
+  },
+  "vulnerability": {
+    "flag_value": "flag{php_basic_challenge_2024}",
+    "check_script": "/check/script.sh"
+  }
+}

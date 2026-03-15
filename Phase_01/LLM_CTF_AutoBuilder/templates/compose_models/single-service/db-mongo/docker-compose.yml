@@ -1,0 +1,17 @@
+version: '3'
+services:
+  db_service:
+    build: ../../../base_images/mongo-common
+    container_name: ${TASK_ID}_mongo
+    restart: always
+    ports:
+      - "${EXPOSED_PORT}:27017"
+    volumes:
+      # MongoDB 同样支持初始化脚本挂载 (.js 脚本)
+      - ./data:/docker-entrypoint-initdb.d/
+    networks:
+      - ctf_net
+
+networks:
+  ctf_net:
+    driver: bridge

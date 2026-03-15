@@ -1,0 +1,17 @@
+{
+  "component_type": "INSTANCE",
+  "id": "web-unserialize-php-01",
+  "name": "PHP Deserialization",
+  "category": "web",
+  "difficulty": "hard",
+  "description": "PHP 反序列化漏洞，构造 isAdmin=true 的序列化字符串触发 __wakeup 获取 flag",
+  "requirements": {
+    "compose_model": "web_php"
+  },
+  "flag_injection": {
+    "file": "src/index.php",
+    "placeholder": "FLAG_PLACEHOLDER",
+    "note": "flag 通过 FLAG 环境变量传入，PHP 用 getenv 读取"
+  },
+  "solve_hint": "?data=O:4:\"User\":2:{s:8:\"username\";s:5:\"admin\";s:7:\"isAdmin\";b:1;}"
+}
