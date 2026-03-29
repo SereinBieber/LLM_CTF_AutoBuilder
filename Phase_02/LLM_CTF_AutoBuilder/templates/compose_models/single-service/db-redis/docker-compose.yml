@@ -1,0 +1,25 @@
+version: '3'
+services:
+  db_service:
+    build: ../../../base_images/redis-common
+    container_name: ${TASK_ID}_redis
+    restart: always
+    ports:
+      - "${EXPOSED_PORT}:6379"
+    environment:
+      - FLAG=flag{test_flag_default}
+    volumes:
+      - ./conf/redis.conf:/usr/local/etc/redis/redis.conf
+      - ./src:/app
+    # 启动Redis，用sh写flag到Redis
+    command: >
+      sh -c "redis-server /usr/local/etc/redis/redis.conf &
+             sleep 2 &&
+             redis-cli set flag $$FLAG &&
+             wait"
+    networks:
+      - ctf_net
+
+networks:
+  ctf_net:
+    driver: bridge

@@ -1,0 +1,17 @@
+{
+  "component_type": "INSTANCE",
+  "id": "misc-bash-jail-01",
+  "name": "Bash Jail Escape",
+  "category": "misc",
+  "difficulty": "easy",
+  "description": "受限Shell过滤了空格/斜杠/cat，需绕过过滤读取/flag文件",
+  "requirements": {
+    "compose_model": "misc-socket"
+  },
+  "flag_injection": {
+    "file": "src/server.py",
+    "placeholder": "FLAG_PLACEHOLDER",
+    "note": "flag 写入 /flag 文件，选手需绕过限制读取"
+  },
+  "solve_hint": "用 $IFS 替代空格，用 tac/more/less 替代 cat，用 $'\\x2f' 替代斜杠"
+}

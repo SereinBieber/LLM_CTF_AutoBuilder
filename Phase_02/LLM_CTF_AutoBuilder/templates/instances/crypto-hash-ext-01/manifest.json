@@ -1,0 +1,17 @@
+{
+  "component_type": "INSTANCE",
+  "id": "crypto-hash-ext-01",
+  "name": "Hash Length Extension Attack",
+  "category": "crypto",
+  "difficulty": "medium",
+  "description": "MD5(secret+message)签名校验，利用Hash长度扩展攻击伪造包含user=admin的合法签名",
+  "requirements": {
+    "compose_model": "crypto-socket"
+  },
+  "flag_injection": {
+    "file": "src/server.py",
+    "placeholder": "FLAG_PLACEHOLDER",
+    "note": "FLAG 环境变量传flag，SECRET 环境变量可另行设置签名密钥（默认supersecretkey）"
+  },
+  "solve_hint": "使用 hashpump 或 hlextend 工具，已知secret长度可直接伪造；secret长度未知时需爆破"
+}

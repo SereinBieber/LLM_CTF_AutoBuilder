@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:5.7
+    container_name: ${TASK_ID}_db
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASS}
+      - MYSQL_DATABASE=ctf_db
+      - MYSQL_USER=ctf_user
+      - MYSQL_PASSWORD=${DB_USER_PASS}
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d:ro
+    networks:
+      - internal_net
+
+  web:
+    build:
+      context: ../../../base_images/php74-apache-mysqli
+    container_name: ${TASK_ID}_web
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "${EXPOSED_PORT}:80"
+    environment:
+      - DB_HOST=db
+      - DB_USER=ctf_user
+      - DB_PASS=${DB_USER_PASS}
+      - DB_NAME=ctf_db
+      - FLAG=FLAG_PLACEHOLDER
+    volumes:
+      - ./src:/var/www/html
+    # 启动时把 FLAG 写入 /flag 文件，供题目读取
+    command: >
+      sh -c "echo $$FLAG > /flag &&
+             chmod 644 /flag &&
+             apache2-foreground"
+    networks:
+      - internal_net
+
+networks:
+  internal_net:
+    driver: bridge

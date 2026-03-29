@@ -1,0 +1,16 @@
+{
+  "component_type": "INSTANCE",
+  "id": "db-mongo-unauth-01",
+  "name": "MongoDB Unauthorized Access",
+  "category": "db",
+  "difficulty": "medium",
+  "description": "MongoDB未启用认证，直接连接后在ctf_secret_db.flag_collection中找到flag",
+  "requirements": {
+    "compose_model": "db-mongo"
+  },
+  "flag_injection": {
+    "file": "data/init.js",
+    "placeholder": "FLAG_PLACEHOLDER"
+  },
+  "solve_hint": "mongo target:port/ctf_secret_db --eval 'db.flag_collection.find()'"
+}

@@ -1,0 +1,17 @@
+{
+  "component_type": "INSTANCE",
+  "id": "misc-pyjail-01",
+  "name": "Python Jail Escape",
+  "category": "misc",
+  "difficulty": "medium",
+  "description": "Python沙箱过滤了常用关键字，需通过__class__.__mro__链调用os模块读取/flag",
+  "requirements": {
+    "compose_model": "misc-socket"
+  },
+  "flag_injection": {
+    "file": "src/server.py",
+    "placeholder": "FLAG_PLACEHOLDER",
+    "note": "flag 写入 /flag 文件"
+  },
+  "solve_hint": "().__class__.__mro__[1].__subclasses__() 找到 Popen 类执行系统命令"
+}

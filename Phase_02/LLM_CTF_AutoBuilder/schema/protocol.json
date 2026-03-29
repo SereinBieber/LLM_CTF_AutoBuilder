@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CTF Automation Protocol",
+  "description": "定义了各模块间协作的数据交换标准",
+  "definitions": {
+    "static_check_report": {
+      "type": "object",
+      "required": ["task_id", "stage", "status", "timestamp"],
+      "properties": {
+        "task_id": { 
+          "type": "string", 
+          "pattern": "^task_\\w+$",
+          "description": "任务唯一标识，必须以 task_ 开头"
+        },
+        "stage": { 
+          "type": "string", 
+          "enum": ["static_check"],
+          "description": "当前所处的流水线阶段"
+        },
+        "status": { 
+          "type": "string", 
+          "enum": ["PASS", "FAIL"],
+          "description": "检测结果，必须大写"
+        },
+        "timestamp": { 
+          "type": "string", 
+          "description": "ISO 8601 格式的时间戳，例如 2026-02-07T12:00:00"
+        },
+        "details": { 
+          "type": "object",
+          "description": "详细的检测报告或错误信息"
+        }
+      }
+    },
+    "build_success_report": {
+      "type": "object",
+      "required": ["task_id", "stage", "status", "access_url"],
+      "properties": {
+        "task_id": { "type": "string" },
+        "stage": { "type": "string", "enum": ["build_deploy"] },
+        "status": { "type": "string", "enum": ["SUCCESS", "FAILURE"] },
+        "access_url": { "type": "string", "format": "uri" },
+        "container_id": { "type": "string" },
+        "timestamp": { "type": "string" }
+      }
+    }
+  }
+}

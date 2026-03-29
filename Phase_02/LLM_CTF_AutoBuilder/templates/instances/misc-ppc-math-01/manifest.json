@@ -1,0 +1,17 @@
+{
+  "component_type": "INSTANCE",
+  "id": "misc-ppc-math-01",
+  "name": "PPC Quick Math",
+  "category": "misc",
+  "difficulty": "easy",
+  "description": "30秒内回答50道加法题，需编写脚本自动化解答",
+  "requirements": {
+    "compose_model": "misc-socket"
+  },
+  "flag_injection": {
+    "file": "src/server.py",
+    "placeholder": "FLAG_PLACEHOLDER",
+    "note": "flag 通过 FLAG 环境变量传入，答完50题后打印"
+  },
+  "solve_hint": "用 pwntools 的 recv/sendline 循环解析题目并发送答案"
+}

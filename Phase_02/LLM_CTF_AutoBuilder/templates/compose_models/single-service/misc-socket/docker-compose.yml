@@ -1,0 +1,22 @@
+version: '3'
+services:
+  misc_service:
+    build: ../../../base_images/misc-common
+    container_name: ${TASK_ID}_misc
+    restart: always
+    ports:
+      - "${EXPOSED_PORT}:9999"
+    volumes:
+      - ./src:/app
+    environment:
+      - FLAG=flag{test_flag_default}
+    command: >
+      sh -c "echo $$FLAG > /flag &&
+             chmod 644 /flag &&
+             socat TCP-LISTEN:9999,reuseaddr,fork EXEC:'python -u server.py',stderr"
+    networks:
+      - ctf_net
+
+networks:
+  ctf_net:
+    driver: bridge

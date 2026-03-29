@@ -1,0 +1,22 @@
+version: '3'
+services:
+  db_service:
+    build: ../../../base_images/postgres-common
+    container_name: ${TASK_ID}_postgres
+    restart: always
+    ports:
+      - "${EXPOSED_PORT}:5432"
+    environment:
+      # 默认弱口令
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=ctf_db
+    volumes:
+      # PGSQL 同样支持 .sql 挂载
+      - ./db:/docker-entrypoint-initdb.d/
+    networks:
+      - ctf_net
+
+networks:
+  ctf_net:
+    driver: bridge

@@ -1,0 +1,16 @@
+{
+  "component_type": "INSTANCE",
+  "id": "db-postgres-weakpass-01",
+  "name": "PostgreSQL Weak Password",
+  "category": "db",
+  "difficulty": "easy",
+  "description": "PostgreSQL使用弱口令，爆破连接后在flag_table表中找到flag",
+  "requirements": {
+    "compose_model": "db-postgres"
+  },
+  "flag_injection": {
+    "file": "data/init.sql",
+    "placeholder": "FLAG_PLACEHOLDER"
+  },
+  "solve_hint": "hydra -l postgres -P rockyou.txt postgres://target:port，连上后 SELECT * FROM flag_table"
+}

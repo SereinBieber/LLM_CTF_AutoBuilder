@@ -1,0 +1,17 @@
+{
+  "component_type": "INSTANCE",
+  "id": "misc-stego-lsb-dynamic",
+  "name": "Dynamic LSB Steganography",
+  "category": "misc",
+  "difficulty": "easy",
+  "description": "服务器动态生成含LSB隐写flag的PNG图片，通过HTTP页面提供下载",
+  "requirements": {
+    "compose_model": "misc-gen-http"
+  },
+  "flag_injection": {
+    "file": "src/generator.py",
+    "placeholder": "FLAG_PLACEHOLDER",
+    "note": "flag 通过 FLAG 环境变量传入，写入生成图片的LSB"
+  },
+  "solve_hint": "下载 flag.png，用 zsteg flag.png 或手写脚本读取每个像素R通道最低位拼接还原"
+}

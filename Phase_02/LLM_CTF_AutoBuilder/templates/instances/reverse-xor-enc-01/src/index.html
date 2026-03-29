@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Reverse Challenge - Firmware Activation Checker</title>
+  <style>
+    body { font-family: 'Courier New', monospace; background: #0d1117; color: #c9d1d9; padding: 40px; }
+    h2   { color: #58a6ff; }
+    .box { background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 20px; max-width: 600px; }
+    a    { color: #58a6ff; font-size: 1.1em; }
+    .tag { color: #3fb950; font-size: 0.85em; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>🔑 FirmwareGuard Activation Checker</h2>
+    <p>A firmware activation utility protects the device with a multi-round XOR key schedule. Break it.</p>
+    <p><strong>Category:</strong> Reverse Engineering &nbsp;|&nbsp; <strong>Difficulty:</strong> Easy-Medium</p>
+    <hr style="border-color:#30363d">
+    <p>⬇️ <a href="challenge" download>Download: challenge (ELF x86-64)</a></p>
+    <p class="tag">Hint: The cipher blob is in .rodata. Identify <code>derive_round_key()</code> and replay decryption.</p>
+  </div>
+</body>
+</html>

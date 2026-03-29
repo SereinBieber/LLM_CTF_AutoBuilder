@@ -1,0 +1,25 @@
+version: '3'
+services:
+  web:
+    # 指向 Python 基础镜像
+    build: ../../../base_images/python-flask
+    container_name: ${TASK_ID}_web
+    restart: always
+    ports:
+      - "${EXPOSED_PORT}:5000"
+    volumes:
+      - ./src:/app
+    environment:
+      - FLAG=flag{test_flag_default}
+    # 用 root 写 flag 后再切换到 ctf 用户运行
+    user: root
+    command: >
+      sh -c "echo $$FLAG > /flag &&
+             chmod 644 /flag &&
+             cd /app && su ctf -c 'python app.py'"
+    networks:
+      - ctf_net
+
+networks:
+  ctf_net:
+    driver: bridge

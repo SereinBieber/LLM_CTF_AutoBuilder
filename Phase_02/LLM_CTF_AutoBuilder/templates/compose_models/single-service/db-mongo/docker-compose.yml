@@ -1,0 +1,18 @@
+version: '3'
+services:
+  db_service:
+    build: ../../../base_images/mongo-common
+    container_name: ${TASK_ID}_mongo
+    restart: always
+    ports:
+      - "${EXPOSED_PORT}:27017"
+    environment:
+      - FLAG=flag{test_flag_default}
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/
+    networks:
+      - ctf_net
+
+networks:
+  ctf_net:
+    driver: bridge

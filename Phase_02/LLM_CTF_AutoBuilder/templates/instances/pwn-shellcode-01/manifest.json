@@ -1,0 +1,15 @@
+{
+  "component_type": "INSTANCE",
+  "id": "pwn-shellcode-01",
+  "name": "Shellcode Execution",
+  "category": "pwn",
+  "difficulty": "easy",
+  "description": "程序mmap可执行内存并直接执行用户输入，发送x64 shellcode即可获取shell",
+  "requirements": {
+    "compose_model": "pwn-socat"
+  },
+  "flag_injection": {
+    "note": "flag 由 compose 的 echo $FLAG > /flag 写入，拿到shell后 cat /flag"
+  },
+  "solve_hint": "pwntools: shellcraft.amd64.linux.sh() 生成execve shellcode直接发送"
+}

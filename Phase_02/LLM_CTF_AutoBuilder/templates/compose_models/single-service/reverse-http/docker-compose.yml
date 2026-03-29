@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  reverse_service:
+    image: nginx:latest
+    container_name: ${TASK_ID}_reverse
+    restart: always
+    ports:
+      - "${EXPOSED_PORT}:80"
+    volumes:
+      - ./src:/build/src
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    environment:
+      - FLAG=FLAG_PLACEHOLDER
+      - DEBIAN_FRONTEND=noninteractive
+    command: >
+      sh -c "apt-get update -qq &&
+             apt-get install -y -qq --no-install-recommends gcc libc6-dev &&
+             cd /build/src &&
+             FLAG=$$FLAG sh build.sh &&
+             cp -f challenge /usr/share/nginx/html/challenge &&
+             cp -f index.html /usr/share/nginx/html/index.html 2>/dev/null || true &&
+             nginx -g 'daemon off;'"
+    networks:
+      - ctf_net
+
+networks:
+  ctf_net:
+    driver: bridge

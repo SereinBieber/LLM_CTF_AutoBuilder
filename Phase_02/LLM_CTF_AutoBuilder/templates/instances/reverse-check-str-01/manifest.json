@@ -1,0 +1,16 @@
+{
+  "component_type": "INSTANCE",
+  "id": "reverse-check-str-01",
+  "name": "License Key Validator",
+  "category": "reverse",
+  "difficulty": "easy",
+  "description": "序列号校验程序，flag 经 XOR+偏移+逆序 编码后存储。逆向 validate_key() 函数还原变换逻辑即可恢复 flag",
+  "requirements": {
+    "compose_model": "reverse-http"
+  },
+  "flag_injection": {
+    "method": "compile_time",
+    "note": "FLAG 通过环境变量传入 build.sh，编译时以 -DFLAG_VALUE 注入二进制，无需替换源码文件"
+  },
+  "solve_hint": "strings/Ghidra 定位 encode_flag()，逆变换：reversed → XOR 0x5A → -3 还原每字节"
+}
